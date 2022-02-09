@@ -6,6 +6,7 @@
 class BaseConvert
 {
 private:
+	//function takes reference of string and change lovercase to upper
 	void toupper(std::string& str) {
 		auto str_iterator_begin = str.begin();
 		auto str_iterator_end = str.end();
@@ -17,6 +18,7 @@ private:
 			*str_iterator_begin = static_cast<char>(val);
 		}
 	}
+	//finds number of commas position, if no returns -1
 	int comma_possition(std::string& str) {
 		auto str_iterator_begin = str.begin();
 		auto str_iterator_end = str.end();
@@ -29,17 +31,18 @@ private:
 
 		return -1;
 	}
+	//if we have letters (like H U I), to make them numbers in char
 	int to_number(char ch) {
 		while (ch > 127)
 			ch -= 128;
-		if (ch >= 48 && ch <= 57)
-			return ch - 48;
-
+		
 		return ch - 55;
 	}
+	//oposite of to_number
 	char to_char(int n) {
 		return static_cast<char>(n + 55);
 	}
+	//convert fractional part by formula and rewrite it in string
 	void fractional_part_convert(std::string& fract_str, int to) {
 		long double num = std::stold(fract_str);
 		fract_str = "";

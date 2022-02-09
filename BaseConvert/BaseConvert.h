@@ -37,6 +37,25 @@ private:
 
 		return ch - 55;
 	}
+	char to_char(int n) {
+		return static_cast<char>(n + 55);
+	}
+	void fractional_part_convert(std::string* fract_str, int to) {
+		long double num = std::stold(*fract_str);
+		*fract_str = "";
+
+		while (num > 0 && fract_str->length() < 50)
+		{
+			num *= to;
+
+			if ((int)num > 9)
+				*fract_str += to_char((int)num);
+			else
+				*fract_str += std::to_string((int)num);
+
+			num -= (int)num;
+		}
+	}
 public :
 	BaseConvert() {}
 	~BaseConvert() {}
@@ -61,7 +80,7 @@ public :
 
 		for (; str_iterator_begin != str_iterator_end; ++str_iterator_begin) {
 			int val = to_number(*str_iterator_begin);
-			if (val == comma_pos) {
+			if (*str_iterator_begin == '.' || *str_iterator_begin == ',') {
 				numbers = -1;
 				continue;
 			}
@@ -73,7 +92,9 @@ public :
 		std::string decimal_str = std::to_string(decimal);
 
 		if (comma_pos != -1) {
-			std::string fractal_part = decimal_str.substr(decimal_str.find("[,\.]"));
+			std::string fractal_part = decimal_str.substr(decimal_str.find("."));
+			fractional_part_convert(&fractal_part, to);
+			std::cout << fractal_part << std::endl;
 		}
 	}
 };

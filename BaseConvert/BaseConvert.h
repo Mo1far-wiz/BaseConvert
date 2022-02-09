@@ -90,12 +90,32 @@ public :
 		}
 
 		std::string decimal_str = std::to_string(decimal);
+		std::string fractal_part;
+		if (comma_pos != -1) {
+			fractal_part = decimal_str.substr(decimal_str.find("."));
+			fractional_part_convert(&fractal_part, to);
+		}
+
+		std::string converted_str = "";
+
+		for (int q = 0; (int)decimal > 0; ++q) {
+			int elem = (int)decimal % to;
+
+			if (elem > 9)
+				converted_str += to_char(elem);
+			else
+				converted_str += elem != 0 ? std::to_string(elem) : std::to_string(0);
+
+			decimal /= to;
+		}
+
+		std::reverse(converted_str.begin(), converted_str.end());
 
 		if (comma_pos != -1) {
-			std::string fractal_part = decimal_str.substr(decimal_str.find("."));
-			fractional_part_convert(&fractal_part, to);
-			std::cout << fractal_part << std::endl;
+			converted_str += "." + fractal_part;
 		}
+
+		return converted_str;
 	}
 };
 

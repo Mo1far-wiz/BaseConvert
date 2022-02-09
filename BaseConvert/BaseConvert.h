@@ -31,7 +31,7 @@ private:
 
 		return -1;
 	}
-	//if we have letters (like H U I), to make them numbers in char
+	//if we have letters (like X U I), to make them numbers in char
 	int to_number(char ch) {
 		while (ch > 127)
 			ch -= 128;

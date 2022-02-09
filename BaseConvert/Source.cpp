@@ -4,6 +4,6 @@
 int main() {
 	BaseConvert converter;
 
-	std::string str = converter.convert("122.33", 10, 16);
+	std::string str = converter.convert("14.88", 30, 11);
 	std::cout << str << std::endl;
 }

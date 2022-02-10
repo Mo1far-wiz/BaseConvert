@@ -114,6 +114,7 @@ public :
 
 		std::reverse(converted_str.begin(), converted_str.end());
 
+
 		if (comma_pos != -1) {
 			converted_str += "." + fractal_part;
 		}

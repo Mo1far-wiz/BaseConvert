@@ -35,12 +35,35 @@ private:
 	int to_number(char ch) {
 		while (ch > 127)
 			ch -= 128;
-		
+
+		if (ch >= 48 && ch <= 57)
+			return ch - 48;
+
 		return ch - 55;
 	}
 	//oposite of to_number
 	char to_char(int n) {
 		return static_cast<char>(n + 55);
+	}
+	//convert integer part by formula and rewrite it in string
+	std::string integer_part_convert(const std::string& int_str, int to) {
+		long long decimal = std::stoll(int_str);
+		std::string converted_int_str = "";
+
+		for (int q = 0; decimal > 0; ++q) {
+			int elem = decimal % to;
+
+			if (elem > 9)
+				converted_int_str += to_char(elem);
+			else
+				converted_int_str += elem != 0 ? std::to_string(elem) : std::to_string(0);
+
+			decimal /= to;
+		}
+
+		std::reverse(converted_int_str.begin(), converted_int_str.end());
+
+		return converted_int_str;
 	}
 	//convert fractional part by formula and rewrite it in string
 	void fractional_part_convert(std::string& fract_str, int to) {
@@ -69,7 +92,9 @@ public :
 		if (from > 36 || to > 36 || from < 0 || to < 0)
 			throw std::invalid_argument("bases should be between 36 and 0");
 
-		long double decimal = 0;
+		long long decimal_int = 0;
+		long double decimal_fract = 0;
+
 		int comma_pos = comma_possition(str);
 		int numbers; // quantity of numbers in string (without comma)
 
@@ -89,18 +114,24 @@ public :
 			}
 
 			long double power = pow(from, numbers--);
-			decimal += val * power;
+
+			if (numbers >= -1)
+				decimal_int += val * power;
+			else
+				decimal_fract += val * power;
 		}
 
-		std::string decimal_str = std::to_string(decimal);
+
 		std::string fractal_part;
 		if (comma_pos != -1) {
-			fractal_part = decimal_str.substr(decimal_str.find("."));
+			fractal_part = std::to_string(decimal_fract);
 			fractional_part_convert(fractal_part, to);
 		}
 
-		std::string converted_str = "";
+ 		std::string decimal_int_str = std::to_string(decimal_int);
+		std::string converted_str = integer_part_convert(decimal_int_str, to);
 
+		/*
 		for (int q = 0; (int)decimal > 0; ++q) {
 			int elem = (int)decimal % to;
 
@@ -113,6 +144,7 @@ public :
 		}
 
 		std::reverse(converted_str.begin(), converted_str.end());
+		*/
 
 
 		if (comma_pos != -1) {
@@ -122,4 +154,3 @@ public :
 		return converted_str;
 	}
 };
-

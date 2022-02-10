@@ -131,22 +131,6 @@ public :
  		std::string decimal_int_str = std::to_string(decimal_int);
 		std::string converted_str = integer_part_convert(decimal_int_str, to);
 
-		/*
-		for (int q = 0; (int)decimal > 0; ++q) {
-			int elem = (int)decimal % to;
-
-			if (elem > 9)
-				converted_str += to_char(elem);
-			else
-				converted_str += elem != 0 ? std::to_string(elem) : std::to_string(0);
-
-			decimal /= to;
-		}
-
-		std::reverse(converted_str.begin(), converted_str.end());
-		*/
-
-
 		if (comma_pos != -1) {
 			converted_str += "." + fractal_part;
 		}

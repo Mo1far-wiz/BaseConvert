@@ -2,17 +2,12 @@
 
 void BaseConvert::toupper(std::string& str)
 {
-
 	auto str_iterator_begin = str.begin();
 	auto str_iterator_end = str.end();
 
-	for (str_iterator_begin; str_iterator_begin != str_iterator_end; ++str_iterator_begin) {
-		int val = *str_iterator_begin;
-		if (val >= 'a' && val <= 'z')
-			val -= 32;
-		*str_iterator_begin = static_cast<char>(val);
-	}
-
+	for (str_iterator_begin; str_iterator_begin != str_iterator_end; ++str_iterator_begin)
+		if (*str_iterator_begin >= 'a' && *str_iterator_begin <= 'z')
+			*str_iterator_begin -= 32;
 }
 
 int BaseConvert::comma_possition(std::string& str)
@@ -20,11 +15,9 @@ int BaseConvert::comma_possition(std::string& str)
 	auto str_iterator_begin = str.begin();
 	auto str_iterator_end = str.end();
 
-	for (int q = 0; str_iterator_begin != str_iterator_end; ++str_iterator_begin, ++q) {
-		int val = *str_iterator_begin;
-		if (val == ',' || val == '.')
+	for (int q = 0; str_iterator_begin != str_iterator_end; ++str_iterator_begin, ++q)
+		if (*str_iterator_begin == ',' || *str_iterator_begin == '.')
 			return q;
-	}
 
 	return -1;
 }
@@ -119,7 +112,6 @@ std::string BaseConvert::convert(std::string str, int from, int to)
 		else
 			decimal_fract += val * power;
 	}
-
 
 	std::string fractal_part;
 	if (comma_pos != -1) {

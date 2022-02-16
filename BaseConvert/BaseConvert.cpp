@@ -41,7 +41,7 @@ char BaseConvert::to_char(int n)
 std::string BaseConvert::integer_part_convert(const std::string& int_str, int to)
 {
 	long long decimal = std::stoll(int_str);
-	if ((int)decimal == 0)
+	if (decimal == 0)
 		return "0";
 	std::string converted_int_str = "";
 
